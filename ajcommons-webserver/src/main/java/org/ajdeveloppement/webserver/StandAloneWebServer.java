@@ -71,7 +71,6 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.util.Arrays;
 
 import javax.script.ScriptException;
 import javax.xml.bind.JAXBException;
@@ -84,7 +83,6 @@ import org.ajdeveloppement.commons.io.XMLSerializer;
 import org.ajdeveloppement.commons.persistence.sql.ContextDomain;
 import org.ajdeveloppement.commons.persistence.sql.SqlContext;
 import org.ajdeveloppement.webserver.services.ExtensibleHttpRequestProcessor;
-import org.ajdeveloppement.webserver.services.files.FilesService;
 
 /**
  * Serveur HTTP de contenu JS
@@ -189,7 +187,7 @@ public class StandAloneWebServer {
 	private static void start() {
 		System.setProperty("nashorn.option.scripting", "true"); //$NON-NLS-1$ //$NON-NLS-2$
 		
-		FilesService.setAllowedGzipExt(Arrays.asList(staticParameters.getResourceString(WEBSERVER_STATIC_ALLOWEDGZIPEXT).split(","))); //$NON-NLS-1$
+		//FilesService.setAllowedGzipExt(Arrays.asList(staticParameters.getResourceString(WEBSERVER_STATIC_ALLOWEDGZIPEXT).split(","))); //$NON-NLS-1$
 		
 		String[] servicesOrder = staticParameters.getResourceString(WEBSERVER_SERVICE_ORDER).split(","); //$NON-NLS-1$
 		

@@ -28,6 +28,10 @@
   	<system>Jenkins</system>
   </ciManagement>
   <modules>
-  	<module>../ajcommons-webserver</module>
+  	<module>ajcommons-webserver</module>
+  	<module>ajcommons-webserver-webapi</module>
+  	<module>ajcommons-webserver-logger</module>
+  	<module>ajcommons-webserver-js</module>
+  	<module>ajcommons-webserver-files</module>
   </modules>
 </project>

@@ -66,18 +66,13 @@
  */
 package org.ajdeveloppement.webserver;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.Reader;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.net.URLConnection;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -87,11 +82,9 @@ import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.security.UnrecoverableKeyException;
 import java.security.cert.CertificateException;
-import java.sql.Connection;
-import java.sql.DatabaseMetaData;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.Arrays;
+import java.util.List;
+import java.util.ServiceLoader;
 
 import javax.net.ServerSocketFactory;
 import javax.net.ssl.SSLParameters;
@@ -99,14 +92,8 @@ import javax.net.ssl.SSLServerSocket;
 import javax.net.ssl.SSLServerSocketFactory;
 import javax.net.ssl.SSLSocket;
 
-import org.ajdeveloppement.commons.UncheckedException;
-import org.ajdeveloppement.commons.persistence.ObjectPersistenceException;
-import org.ajdeveloppement.commons.persistence.sql.QResults;
-import org.ajdeveloppement.commons.persistence.sql.SqlContext;
 import org.ajdeveloppement.commons.security.SSLUtils;
-import org.ajdeveloppement.commons.sql.SqlManager;
-import org.ajdeveloppement.webserver.data.DatabaseParameters;
-import org.h2.tools.RunScript;
+import org.ajdeveloppement.webserver.data.Request;
 
 /**
  * @author aurelien
@@ -120,7 +107,7 @@ public class HttpServer {
 	private int listenSslPort = 0;
 	private InetAddress bindAddress;
 	private int maximumIncomingQueue = 0;
-	private Logger logger;
+	private List<Logger> loggers;
 	private AccessVerifier accessVerifier;
 	private ResourcesSelector fileSelector;
 	private HttpRequestProcessor requestProcessor;
@@ -147,70 +134,11 @@ public class HttpServer {
 
 		//TODO use java inject service
 		loadControlAccessScript();
-
-		//TODO use java inject service
-		try {
-			createTables();
-			setLogger(new DbLogger());
-		} catch (SQLException | IOException | ObjectPersistenceException e) {
-			throw new UncheckedException(e);
-		}
+		
+		ServiceLoader.load(Logger.class).forEach(logger -> addLogger(logger));
 	}
 
-	private static void createTables()
-			throws FileNotFoundException, IOException, SQLException, ObjectPersistenceException {
-		Connection dbConnection = SqlContext.getDefaultContext().getConnectionForDomain(WEBSERVER_DB_DOMAIN);
-		if (dbConnection != null && dbConnection.isValid(10)) {
-			DatabaseMetaData dbMetaData = dbConnection.getMetaData();
-
-			try (ResultSet rs = dbMetaData.getTables(null, "AJWEBSERVER", "PARAM", new String[] { "TABLE" })) { //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-				if (!rs.next()) {
-					URL scriptUrl = HttpServer.class.getResource("/META-INF/persistence/createDb.sql"); //$NON-NLS-1$
-					if (scriptUrl != null) {
-						URLConnection urlConnection = scriptUrl.openConnection();
-						if (urlConnection != null) {
-							try (Reader reader = new BufferedReader(
-									new InputStreamReader(urlConnection.getInputStream()))) {
-								RunScript.execute(dbConnection, reader);
-							}
-						}
-					}
-				} else {
-					SqlManager sqlManager = new SqlManager(dbConnection, null);
-					DatabaseParameters databaseParameters = QResults.from(DatabaseParameters.class).first();
-					if (databaseParameters != null) {
-						if (databaseParameters.getDbVersion() < 2) {
-							sqlManager.executeUpdate("ALTER TABLE AJWEBSERVER.Request ADD Referer VARCHAR(255)"); //$NON-NLS-1$
-						}
-
-						if (databaseParameters.getDbVersion() < 3) {
-							sqlManager.executeUpdate(
-									"CREATE TABLE IF NOT EXISTS AJWEBSERVER.SessionData (IdSession UUID NOT NULL, Data OTHER, PRIMARY KEY (IdSession));"); //$NON-NLS-1$
-						}
-
-						if (databaseParameters.getDbVersion() < 4) {
-							sqlManager
-									.executeUpdate("ALTER TABLE AJWEBSERVER.SessionData ADD ExpirationDate DATETIME;"); //$NON-NLS-1$
-						}
-
-						if (databaseParameters.getDbVersion() < 5) {
-							sqlManager.executeUpdate("ALTER TABLE AJWEBSERVER.Request ADD Duration BIGINT;"); //$NON-NLS-1$
-							sqlManager.executeUpdate("ALTER TABLE AJWEBSERVER.Request ADD Exception TEXT;"); //$NON-NLS-1$
-						}
-
-						if (databaseParameters.getDbVersion() < 6) {
-							sqlManager.executeUpdate("ALTER TABLE AJWEBSERVER.Request ADD Host VARCHAR(255);"); //$NON-NLS-1$
-						}
-
-						if (databaseParameters.getDbVersion() < 7) {
-							sqlManager.executeUpdate("ALTER TABLE AJWEBSERVER.Request ALTER Referer VARCHAR(512)"); //$NON-NLS-1$
-							sqlManager.executeUpdate("UPDATE AJWEBSERVER.PARAM SET DBVERSION = 7;"); //$NON-NLS-1$
-						}
-					}
-				}
-			}
-		}
-	}
+	
 
 	private void loadControlAccessScript() {
 		try {
@@ -324,16 +252,24 @@ public class HttpServer {
 	/**
 	 * @return the logger
 	 */
-	public Logger getLogger() {
-		return logger;
+	public List<Logger> getLoggers() {
+		return loggers;
 	}
 
 	/**
 	 * @param logger
 	 *            the logger to set
 	 */
-	public void setLogger(Logger logger) {
-		this.logger = logger;
+	public void addLogger(Logger logger) {
+		this.loggers.add(logger);
+	}
+	
+	public void removeLogger(Logger logger) {
+		this.loggers.add(logger);
+	}
+	
+	public void saveLogEntry(Request request) {
+		loggers.forEach(l -> l.saveEntry(request));
 	}
 
 	/**

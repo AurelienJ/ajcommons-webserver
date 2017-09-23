@@ -1031,8 +1031,7 @@ public class HttpSession {
 					
 					sendResponse(keepAlive, response, httpRequest);
 					
-					if(getHttpServer().getLogger() != null 
-							&& ((httpRequest != null && httpRequest.getRequest() != null) || request != null)) {
+					if((httpRequest != null && httpRequest.getRequest() != null) || request != null) {
 						
 						if(httpRequest != null)
 							request = httpRequest.getRequest();
@@ -1040,7 +1039,7 @@ public class HttpSession {
 							long duration = ChronoUnit.MILLIS.between(start,Instant.now());
 							request.setDuration(duration);
 						}
-						getHttpServer().getLogger().saveEntry(request);
+						getHttpServer().saveLogEntry(request);
 					}
 					
 					if(keepAlive)
