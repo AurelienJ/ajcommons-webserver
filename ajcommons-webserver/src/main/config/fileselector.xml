@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<fileSelector>
+	<basePath>WebContent</basePath>
+	<!-- <host default="true">
+		<resourcesPath>root</resourcesPath>
+		<alias prefix="/admin">
+			<resourcesPath>admin</resourcesPath>
+		</alias>
+	</host> -->
+	<!-- <host pattern="my\.domain\.net">
+		<resourcesPath>myDomain</resourcesPath>
+		<alias prefix="/update">
+			<resourcesPath>update</resourcesPath>
+		</alias>
+	</host> -->
+</fileSelector>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<domain>
+	<databaseUrl>jdbc:h2:webserver;AUTO_SERVER=true</databaseUrl>
+	<user>sa</user>
+	<password></password>
+	<persistenceDialect>h2</persistenceDialect>
+</domain>
