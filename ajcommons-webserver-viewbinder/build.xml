@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:ivy="antlib:org.apache.ivy.ant" name="ajcommons-webserver-viewbinder" default="pack">
+	<description>Librairie de class standard AJ</description>
+		
+	<property name="src.dir" value="src"/>
+	<property name="build.dir" value="bin"/>
+	
+	<property name="src.junit" value="test"/>
+	<property name="build.tests" value="${build.dir}/testcases"/>
+	<property name="build.junit.reports" location="${build.tests}/reports"/>
+	
+	<ivy:cachepath pathid="main.classpath" type="jar,bundle"/>
+	
+	<target name="resolve" description="--> retrieve dependencies with ivy">
+        <ivy:retrieve />
+    </target>
+	
+	<target name="javadoc" depends="resolve" description="Construction de la documentation java">
+		<mkdir dir="doc"/>
+        <javadoc access="package" 
+        		additionalparam=" -encoding utf8 -docencoding utf8 -charset utf8"
+				classpath="lib/junit-4.12.jar"
+	        	destdir="doc"
+	        	source="1.8"
+	        	sourcepath="${src.dir}">
+			<tag name="category"
+				description="Category: "
+        		scope="all" />
+            <link href="http://docs.oracle.com/javase/8/docs/api/"/>
+        </javadoc>
+    </target>
+
+	<target name="build" depends="resolve" description="Compilation de la librairie">
+		<mkdir dir="${build.dir}"/>
+		<delete>
+			<fileset dir="${build.dir}">
+			    <include name="**/**"/>
+			</fileset>
+		</delete>
+
+		<javac srcdir="${src.dir}" destdir="${build.dir}"
+			optimize="on"
+			debug="true"
+			encoding="UTF-8"
+			compiler="modern"
+			source="1.8"
+			target="1.8"
+			includeantruntime="true">
+			<classpath refid="main.classpath" />
+		</javac>
+		<copy todir="${build.dir}">
+			<fileset dir="${src.dir}" >
+				<exclude name="**/*.java" />
+			</fileset>
+		</copy>
+	</target>
+	
+	<target name="build-test" description="Compilation des test JUnit">
+		<mkdir dir="${build.dir}"/>
+		<javac srcdir="${src.junit}" destdir="${build.dir}"
+			optimize="on"
+			debug="true"
+			encoding="UTF-8"
+			compiler="modern"
+			target="1.8">
+		</javac>
+		<copy todir="${build.dir}">
+			<fileset dir="${src.junit}" >
+				<exclude name="**/*.java" />
+			</fileset>
+		</copy>
+	</target>
+	
+	<target name="test" description="Test JUnit">
+		<junit>
+			<classpath refid="tests-classpath"/>
+			<formatter type="brief" usefile="false"/>
+			<batchtest fork="yes"
+                   todir="${build.junit.reports}"
+                   haltonerror="true"
+                   haltonfailure="true">
+				<fileset dir="${src.junit}">
+					<include name="**/*Test*.java" />
+					<exclude name="**/AllTests.java" />
+				</fileset>
+			</batchtest>
+       </junit>
+	</target>
+	
+	<target name="pack" depends="build" description="packages optimisé">
+		<jar jarfile="target/${ivy.module}-${ivy.revision}.jar" basedir="${build.dir}">
+		</jar>
+	</target>
+	
+	<target name="publish" depends="resolve">
+		<ivy:publish resolver="local" overwrite="true"> 
+		  <ivy:artifacts pattern="target/[artifact]-[revision](-[classifier]).[ext]" /> 
+		</ivy:publish> 
+	</target>
+	
+	<target name="publish-public" depends="resolve">
+		<ivy:publish resolver="ajdev" overwrite="true"> 
+			<ivy:artifacts pattern="target/[artifact]-[revision](-[classifier]).[ext]" /> 
+		</ivy:publish> 
+	</target>
+</project>
