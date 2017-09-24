@@ -33,5 +33,6 @@
   	<module>ajcommons-webserver-logger</module>
   	<module>ajcommons-webserver-js</module>
   	<module>ajcommons-webserver-files</module>
+  	<module>ajcommons-webserver-viewbinder</module>
   </modules>
 </project>
