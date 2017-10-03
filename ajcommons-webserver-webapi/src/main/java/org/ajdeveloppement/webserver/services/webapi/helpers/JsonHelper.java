@@ -110,7 +110,7 @@ public class JsonHelper {
 	static {
 		jsonMapper.findAndRegisterModules();
 		jsonMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-		jsonMapper.setDateFormat( new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ")); //$NON-NLS-1$
+		jsonMapper.setDateFormat( new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")); //$NON-NLS-1$
 	}
 	
 	private static ObjectMapper getMapper() {

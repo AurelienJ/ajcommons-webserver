@@ -82,6 +82,7 @@ import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.security.UnrecoverableKeyException;
 import java.security.cert.CertificateException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ServiceLoader;
@@ -107,7 +108,7 @@ public class HttpServer {
 	private int listenSslPort = 0;
 	private InetAddress bindAddress;
 	private int maximumIncomingQueue = 0;
-	private List<Logger> loggers;
+	private List<Logger> loggers = new ArrayList<>();
 	private AccessVerifier accessVerifier;
 	private ResourcesSelector fileSelector;
 	private HttpRequestProcessor requestProcessor;
