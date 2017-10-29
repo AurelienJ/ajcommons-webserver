@@ -7,14 +7,15 @@ import java.util.Date;
 
 import org.ajdeveloppement.webserver.services.webapi.helpers.JsonHelper;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 class JsonHelperTest {
 
-	@Before
+	@BeforeEach
 	void setUp() throws Exception {
 	}
 
