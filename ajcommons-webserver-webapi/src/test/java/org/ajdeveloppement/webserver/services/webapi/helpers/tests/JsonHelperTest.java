@@ -1,12 +1,10 @@
 package org.ajdeveloppement.webserver.services.webapi.helpers.tests;
 
-
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Date;
 
 import org.ajdeveloppement.webserver.services.webapi.helpers.JsonHelper;
-import org.junit.Assert;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -25,7 +23,7 @@ class JsonHelperTest {
 		try {
 			returnValue = JsonHelper.toJson(new TestObject(new Date(1505512800000l), null, 0, false));
 			
-			Assert.assertEquals("{\"uneDate\":\"2017-09-16T00:00:00.000Z\",\"uneChaine\":null,\"unNombre\":0,\"unBoolean\":false}", returnValue);
+			assertEquals("{\"uneDate\":\"2017-09-16T00:00:00.000Z\",\"uneChaine\":null,\"unNombre\":0,\"unBoolean\":false}", returnValue);
 		} catch (JsonProcessingException e) {
 			fail(e.toString());
 		}
