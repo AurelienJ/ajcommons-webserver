@@ -398,9 +398,9 @@ public class HttpSession {
 		if(httpRequest.getRequest() != null)
 			httpRequest.getRequest().setRequestLength(httpRequest.getRequest().getRequestLength() + dataLength);
 		
-		String contentType = httpRequest.getHeaderValues().get("content-type").toLowerCase(); //$NON-NLS-1$
+		String contentType = httpRequest.getHeaderValues().get("content-type"); //$NON-NLS-1$
 		
-		if(contentType.startsWith("application/x-www-form-urlencoded")) { //$NON-NLS-1$
+		if(contentType != null && contentType.toLowerCase().startsWith("application/x-www-form-urlencoded")) { //$NON-NLS-1$
 			if(dataLength > 0) {
 				String postMessage = readContentAsString(Charset.forName("US-ASCII")); //$NON-NLS-1$
 				
