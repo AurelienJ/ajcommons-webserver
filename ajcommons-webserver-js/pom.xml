@@ -3,14 +3,32 @@
   <parent>
     <groupId>org.ajdeveloppement</groupId>
     <artifactId>ajcommons-webserver-parent</artifactId>
-    <version>0.4.1-SNAPSHOT</version>
+    <version>0.4.2-SNAPSHOT</version>
   </parent>
   <artifactId>ajcommons-webserver-js</artifactId>
   <dependencies>
   	<dependency>
   		<groupId>org.ajdeveloppement</groupId>
   		<artifactId>ajcommons-webserver</artifactId>
-  		<version>0.4.1-SNAPSHOT</version>
+  		<version>0.4.2-SNAPSHOT</version>
   	</dependency>
   </dependencies>
+  <build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.7.0</version>
+				<configuration>
+					<release>10</release>
+				</configuration>
+				<dependencies>
+					<dependency>
+						<groupId>org.ow2.asm</groupId>
+						<artifactId>asm</artifactId>
+						<version>6.2</version> <!-- Use newer version of ASM -->
+					</dependency>
+				</dependencies>
+			</plugin>
+		</plugins>
+	</build>
 </project>
