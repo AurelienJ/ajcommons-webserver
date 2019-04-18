@@ -22,9 +22,9 @@
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.7.0</version>
+				<version>3.8.0</version>
 				<configuration>
-					<release>10</release>
+					<release>11</release>
 					<annotationProcessorPaths>
 						<path>
 							<groupId>org.ajdeveloppement</groupId>
@@ -33,13 +33,6 @@
 						</path>
 					</annotationProcessorPaths>
 				</configuration>
-				<dependencies>
-					<dependency>
-						<groupId>org.ow2.asm</groupId>
-						<artifactId>asm</artifactId>
-						<version>6.2</version> <!-- Use newer version of ASM -->
-					</dependency>
-				</dependencies>
 			</plugin>
 		</plugins>
 	</build>
