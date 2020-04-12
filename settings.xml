@@ -18,9 +18,14 @@
           <snapshots><enabled>true</enabled></snapshots>
         </repository>
         <repository>
-          <id>github</id>
-          <name>GitHub AurelienJ Apache Maven Packages</name>
+          <id>ajcommons</id>
+          <name>GitHub AurelienJ/ajcommons Apache Maven Packages</name>
           <url>https://maven.pkg.github.com/AurelienJ/ajcommons</url>
+        </repository>
+        <repository>
+          <id>ajcommons-webserver</id>
+          <name>GitHub AurelienJ/ajcommons-webserver Apache Maven Packages</name>
+          <url>https://maven.pkg.github.com/AurelienJ/ajcommons-webserver</url>
         </repository>
       </repositories>
     </profile>
@@ -28,7 +33,7 @@
 
   <servers>
     <server>
-      <id>github</id>
+      <id>ajcommons-webserver</id>
       <username>${env.GITHUB_ACTOR}</username>
       <password>${env.GITHUB_TOKEN}</password>
     </server>
