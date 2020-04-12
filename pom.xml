@@ -20,13 +20,15 @@
   </organization>
   
   <scm>
-  	<url>https://svn.ajdeveloppement.org/</url>
+  	<url>https://github.com/AurelienJ/ajcommons</url>
   </scm>
-  
-  <ciManagement>
-  	<url>https://hudson.ajdeveloppement.org/</url>
-  	<system>Jenkins</system>
-  </ciManagement>
+  <distributionManagement>
+   <repository>
+     <id>github</id>
+     <name>GitHub AurelienJ Apache Maven Packages</name>
+     <url>https://maven.pkg.github.com/AurelienJ/ajcommons</url>
+   </repository>
+  </distributionManagement>
   <modules>
   	<module>ajcommons-webserver</module>
   	<module>ajcommons-webserver-webapi</module>

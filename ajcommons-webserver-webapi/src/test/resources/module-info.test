@@ -1,0 +1,2 @@
+--add-opens 
+  org.ajdeveloppement.webserver.services.webapi.helpers.tests=ALL-UNNAMED
