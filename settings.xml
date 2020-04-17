@@ -35,7 +35,7 @@
   	<server>
       <id>ajcommons</id>
       <username>${env.GITHUB_ACTOR}</username>
-      <password>${env.GITHUB_TOKEN}</password>
+      <password>${env.AJCOMMONS_GIT_TOKEN}</password>
     </server>
     <server>
       <id>github</id>
