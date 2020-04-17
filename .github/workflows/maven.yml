@@ -22,8 +22,8 @@ jobs:
       with:
         java-version: 11
         
-    - name: Environnement
-      uses: hmarr/debug-action
+    - name: Debug Action
+      uses: hmarr/debug-action@v1.0.0
       
     - name: Build with Maven
       run: mvn -s settings.xml -B package --file pom.xml
