@@ -21,9 +21,6 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 11
-        
-    - name: Debug Action
-      uses: hmarr/debug-action@v1.0.0
-      
+
     - name: Build with Maven
       run: mvn -s settings.xml -B package --file pom.xml
