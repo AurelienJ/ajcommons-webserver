@@ -4,7 +4,7 @@ module org.ajdeveloppement.webserver.logger {
 	requires org.ajdeveloppement.commons.persistence.sql;
 	requires org.ajdeveloppement.webserver.core;
 	requires java.sql;
-	requires h2;
+	requires com.h2database;
 
 	provides org.ajdeveloppement.webserver.Logger with org.ajdeveloppement.webserver.logger.DbLogger;
 }
