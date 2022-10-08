@@ -81,7 +81,7 @@ public class Sessions {
 	private static SessionManager sessionManager = SessionManager.getInstance();
 	
 	@SuppressWarnings("nls")
-	public Sessions(HttpRequest httpRequest) {
+	public Sessions(org.ajdeveloppement.webserver.HttpRequest httpRequest) {
 		this.sessionId = null;
 		this.creation = false;
 		
