@@ -92,7 +92,7 @@ import org.ajdeveloppement.webserver.services.webapi.annotations.WebApiControlle
  *
  */
 @SupportedAnnotationTypes(value={"org.ajdeveloppement.webserver.services.webapi.annotations.WebApiController"}) //
-@SupportedSourceVersion(SourceVersion.RELEASE_8)
+@SupportedSourceVersion(SourceVersion.RELEASE_11)
 public class WebApiControllerProcessor extends AbstractProcessor {
 
 	private boolean controllersFileGenerated = false;
