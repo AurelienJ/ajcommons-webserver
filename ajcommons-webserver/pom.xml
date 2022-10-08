@@ -29,7 +29,7 @@
 						<path>
 							<groupId>org.ajdeveloppement</groupId>
 							<artifactId>ajcommons-persistence-sql</artifactId>
-							<version>2.0.13</version>
+							<version>2.0.14</version>
 						</path>
 					</annotationProcessorPaths>
 				</configuration>
@@ -40,12 +40,12 @@
 		<dependency>
 			<groupId>org.ajdeveloppement</groupId>
 			<artifactId>ajcommons-core</artifactId>
-			<version>2.0.13</version>
+			<version>2.0.14</version>
 		</dependency>
 		<dependency>
 			<groupId>org.ajdeveloppement</groupId>
 			<artifactId>ajcommons-persistence-sql</artifactId>
-			<version>2.0.13</version>
+			<version>2.0.14</version>
 		</dependency>
 		<dependency>
 			<groupId>com.h2database</groupId>
